@@ -1,0 +1,22 @@
+const userMock = [
+  {
+    'id': '1',
+    'firstName': 'Berniece',
+    'lastName': 'Kris',
+    'username': 'Ana_Quigley',
+  },
+  {
+    'id': '2',
+    'firstName': 'Bradly',
+    'lastName': 'Lind',
+    'username': 'Winona_Kulas12',
+  },
+  {
+    'id': '3',
+    'firstName': 'Bradly',
+    'lastName': 'Lind',
+    'username': 'Winona_Kulas12',
+  }
+];
+
+exports.userMock = userMock;

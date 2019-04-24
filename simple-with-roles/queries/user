@@ -1,0 +1,50 @@
+const graphql = require('graphql');
+
+const {userType} = require('../types');
+const {userMock} = require('../mocks');
+
+// User query
+const userQuery = {
+  type: userType,
+  args: {
+    id: {
+      type: graphql.GraphQLNonNull(graphql.GraphQLString),
+    },
+  },
+  resolve: function (_, {id}) {
+    const user = userMock.find(item => item.id === id);
+
+    if (!user) {
+      throw new Error("User is not exist");
+    }
+
+    return user;
+  },
+};
+
+// Users query
+const usersQuery = {
+  type: graphql.GraphQLList(userType),
+  resolve: function () {
+    return userMock;
+  },
+};
+
+
+/*
+{
+  user(id: "11") {
+    id
+    firstName
+    lastName
+    username
+  }
+  users {
+    id
+    firstName
+  }
+}
+*/
+
+exports.userQuery = userQuery;
+exports.usersQuery = usersQuery;

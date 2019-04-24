@@ -1,0 +1,71 @@
+const graphql = require('graphql');
+
+const {userType} = require('../types');
+
+// Mock
+const fakeDatabase = [
+  {
+    'id': '1',
+    'firstName': 'Berniece',
+    'lastName': 'Kris',
+    'username': 'Ana_Quigley',
+  },
+  {
+    'id': '2',
+    'firstName': 'Bradly',
+    'lastName': 'Lind',
+    'username': 'Winona_Kulas12',
+  },
+  {
+    'id': '3',
+    'firstName': 'Bradly',
+    'lastName': 'Lind',
+    'username': 'Winona_Kulas12',
+  }
+];
+
+// User query
+const userQuery = {
+  type: userType,
+  args: {
+    id: {
+      type: graphql.GraphQLNonNull(graphql.GraphQLString),
+    },
+  },
+  resolve: function (_, {id}) {
+    const user = fakeDatabase.find(item => item.id === id);
+
+    if (!user) {
+      throw new Error("User is not exist");
+    }
+
+    return user;
+  },
+};
+
+// Users query
+const usersQuery = {
+  type: graphql.GraphQLList(userType),
+  resolve: function () {
+    return fakeDatabase;
+  },
+};
+
+
+/*
+{
+  user(id: "11") {
+    id
+    firstName
+    lastName
+    username
+  }
+  users {
+    id
+    firstName
+  }
+}
+*/
+
+exports.userQuery = userQuery;
+exports.usersQuery = usersQuery;
